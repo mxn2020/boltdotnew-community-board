@@ -20,7 +20,7 @@ VITE_API_BASE_URL=https://botdotnew-community-board.netlify.app//api
 
 # Upstash Redis Configuration
 # Get these from: https://console.upstash.com/
-UPSTASH_REDIS_REST_URL=https://your-redis-url.upstash.io
+UPSTASH_REDIS_REST_URL=https://skilled-buck-34343.upstash.io
 UPSTASH_REDIS_REST_TOKEN=your-redis-token-here
 
 # ===========================================
