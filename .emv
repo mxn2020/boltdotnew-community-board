@@ -40,7 +40,7 @@ QSTASH_NEXT_SIGNING_KEY="sig_6HDp9u8rc6ahCsuupWNm4j7tcmo6"
 
 # JWT Secret (REQUIRED - must be at least 32 characters for security)
 # Generate with: openssl rand -base64 32
-JWT_SECRET=your-super-secret-jwt-key-at-least-32-characters-long-for-security
+JWT_SECRET=1a1894530260b638d46177a12961d20139ec60e38d900487ed1617b8a6ad4549
 
 # Maximum login attempts before rate limiting kicks in
 MAX_LOGIN_ATTEMPTS=5
