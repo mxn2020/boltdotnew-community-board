@@ -2,17 +2,19 @@
 
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "rm -rf node_modules package-lock.json && npm install --include=dev && npm run build"
   
 [build.environment]
-  # Use Node.js 18 for better compatibility
-  NODE_VERSION = "18"
+  # Use Node.js 20 for modern package compatibility
+  NODE_VERSION = "20"
+  # Ensure npm installs dev dependencies needed for build
+  NPM_CONFIG_PRODUCTION = "false"
   # Ensure npm doesn't use frozen lockfile in CI
   NPM_FLAGS = "--no-frozen-lockfile"
   # Disable Edge Functions runtime
   NETLIFY_EXPERIMENTAL_EDGE_FUNCTIONS = "false"
   # Force traditional functions
-  FUNCTIONS_RUNTIME = "nodejs18.x"
+  FUNCTIONS_RUNTIME = "nodejs20.x"
 
 [functions]
   directory = "netlify/functions"
