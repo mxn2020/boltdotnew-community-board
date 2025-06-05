@@ -23,6 +23,7 @@ import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import TestPage from './pages/TestPage';
 import NotFoundPage from './pages/NotFoundPage';
+import CommunityBoardPage from './pages/CommunityBoardPage';
 
 // Admin Pages
 import FeatureFlagsPage from './pages/admin/FeatureFlagsPage';
@@ -123,6 +124,9 @@ function AppContent() {
           <Route path="blog" element={<BlogListPage />} />
           <Route path="blog/:slug" element={<BlogPostPage />} />
           <Route path="examples" element={<ExamplesPage />} />
+          
+          {/* Community Board */}
+          <Route path="community" element={<CommunityBoardPage />} />
 
           {/* Protected Routes */}
           <Route
