@@ -1,0 +1,172 @@
+# Environment Configuration Example
+# Copy this file to .env and fill in your actual values
+
+# ===========================================
+# APPLICATION SETTINGS
+# ===========================================
+
+# Environment (development, staging, production)
+NODE_ENV=development
+
+# Application URL (used for CORS and redirects)
+VITE_APP_URL=https://botdotnew-community-board.netlify.app/
+
+# API Base URL (for frontend to call backend functions)
+VITE_API_BASE_URL=https://botdotnew-community-board.netlify.app//api
+
+# ===========================================
+# DATABASE CONFIGURATION
+# ===========================================
+
+# Upstash Redis Configuration
+# Get these from: https://console.upstash.com/
+UPSTASH_REDIS_REST_URL=https://your-redis-url.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your-redis-token-here
+
+# ===========================================
+# QSTASH CONFIGURATION (Task Queue)
+# ===========================================
+
+# Upstash QStash Configuration
+# Get these from: https://console.upstash.com/qstash
+QSTASH_TOKEN=your-qstash-token-here
+QSTASH_CURRENT_SIGNING_KEY=your-current-signing-key
+QSTASH_NEXT_SIGNING_KEY=your-next-signing-key
+
+# ===========================================
+# AUTHENTICATION CONFIGURATION
+# ===========================================
+
+# JWT Secret (REQUIRED - must be at least 32 characters for security)
+# Generate with: openssl rand -base64 32
+JWT_SECRET=your-super-secret-jwt-key-at-least-32-characters-long-for-security
+
+# Maximum login attempts before rate limiting kicks in
+MAX_LOGIN_ATTEMPTS=5
+
+# CORS Origin (set to your domain in production)
+CORS_ORIGIN=*
+
+# Security settings
+SECURE_COOKIES=true
+
+# JWT Token Expiry (e.g., 7d, 24h, 30m)
+JWT_EXPIRY=7d
+
+# Session Cookie Name
+COOKIE_NAME=promptnotes_session
+
+# ===========================================
+# OAUTH PROVIDERS (Optional - for social login)
+# ===========================================
+
+# GitHub OAuth (if using GitHub authentication)
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+
+# Google OAuth (if using Google authentication)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# ===========================================
+# NETLIFY CONFIGURATION
+# ===========================================
+
+# Netlify Site URL (auto-populated in production)
+URL=http://localhost:8888
+
+# Netlify Deploy Context (auto-populated)
+CONTEXT=dev
+
+# ===========================================
+# SECURITY SETTINGS
+# ===========================================
+
+# CORS Origins (comma-separated list of allowed origins)
+CORS_ORIGINS=http://localhost:5173,http://localhost:8888,http://localhost:3000
+
+# Rate Limiting (requests per minute per IP)
+RATE_LIMIT_RPM=100
+
+# ===========================================
+# FEATURE FLAGS
+# ===========================================
+
+# Enable/disable rich text editor
+VITE_ENABLE_RICH_EDITOR=true
+
+# Enable/disable custom note types creation
+VITE_ENABLE_CUSTOM_NOTE_TYPES=true
+
+# Enable/disable note threading
+VITE_ENABLE_NOTE_THREADING=true
+
+# Maximum nested note depth
+VITE_MAX_THREAD_DEPTH=5
+
+# ===========================================
+# THIRD-PARTY API KEYS (Coming Soon Features)
+# ===========================================
+
+# ElevenLabs API Key (for text-to-speech features)
+ELEVENLABS_API_KEY=your-elevenlabs-api-key-here
+
+# Tavus API Key (for personalized video features)
+TAVUS_API_KEY=your-tavus-api-key-here
+
+# Sentry DSN (for error monitoring)
+SENTRY_DSN=your-sentry-dsn-here
+
+# OpenAI API Key (for AI features)
+OPENAI_API_KEY=your-openai-api-key-here
+
+# Nodely.io RPC Endpoint (for Web3 features)
+NODELY_RPC_URL=your-nodely-rpc-url-here
+
+# ===========================================
+# EMAIL CONFIGURATION (for QStash welcome emails)
+# ===========================================
+
+# Email service configuration (choose one)
+# SMTP Configuration
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+
+# Or use a service like SendGrid, Mailgun, etc.
+SENDGRID_API_KEY=your-sendgrid-api-key
+MAILGUN_API_KEY=your-mailgun-api-key
+MAILGUN_DOMAIN=your-mailgun-domain
+
+# ===========================================
+# STORAGE LIMITS
+# ===========================================
+
+# Maximum note content size (in characters)
+MAX_NOTE_CONTENT_SIZE=50000
+
+# Maximum notes per user
+MAX_NOTES_PER_USER=10000
+
+# Maximum custom note types per user
+MAX_CUSTOM_NOTE_TYPES_PER_USER=50
+
+# Maximum task queue size per user
+MAX_QSTASH_TASKS_PER_USER=1000
+
+# ===========================================
+# DEVELOPMENT TOOLS
+# ===========================================
+
+# Enable debug logging
+DEBUG=false
+
+# Log level (error, warn, info, debug)
+LOG_LEVEL=info
+
+# Enable Redis debug logging
+REDIS_DEBUG=false
+
+# Enable QStash debug logging
+QSTASH_DEBUG=false
