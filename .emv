@@ -21,7 +21,7 @@ VITE_API_BASE_URL=https://botdotnew-community-board.netlify.app//api
 # Upstash Redis Configuration
 # Get these from: https://console.upstash.com/
 UPSTASH_REDIS_REST_URL=https://skilled-buck-34343.upstash.io
-UPSTASH_REDIS_REST_TOKEN=your-redis-token-here
+UPSTASH_REDIS_REST_TOKEN=AYYnAAIjcDFiYjcxYjI4MmE1Mjc0YTIxYjc5ZTk0YjkyYzIzZWUxNHAxMA
 
 # ===========================================
 # QSTASH CONFIGURATION (Task Queue)
@@ -29,9 +29,10 @@ UPSTASH_REDIS_REST_TOKEN=your-redis-token-here
 
 # Upstash QStash Configuration
 # Get these from: https://console.upstash.com/qstash
-QSTASH_TOKEN=your-qstash-token-here
-QSTASH_CURRENT_SIGNING_KEY=your-current-signing-key
-QSTASH_NEXT_SIGNING_KEY=your-next-signing-key
+QSTASH_URL="https://qstash.upstash.io"
+QSTASH_TOKEN="eyJVc2VySUQiOiI2NzYxZmQxZC02ZWUzLTQwMjgtOTg3MS00MWUzOTY3NmM4MTMiLCJQYXNzd29yZCI6IjdmZGNiMDg2OTU2NTQ5ODQ5NjgzZWRiYjg3NGUwYTg5In0="
+QSTASH_CURRENT_SIGNING_KEY="sig_66wJM135bvqdyr3WtkWT3azifqRT"
+QSTASH_NEXT_SIGNING_KEY="sig_6HDp9u8rc6ahCsuupWNm4j7tcmo6"
 
 # ===========================================
 # AUTHENTICATION CONFIGURATION
