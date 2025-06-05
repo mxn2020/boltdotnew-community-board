@@ -1,9 +1,0 @@
-{
-  "name": "counter",
-  "version": "1.0.0",
-  "type": "commonjs",
-  "main": "index.cjs",
-  "dependencies": {
-    "@upstash/redis": "^1.34.0"
-  }
-}
