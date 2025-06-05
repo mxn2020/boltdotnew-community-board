@@ -29,11 +29,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '../components/ui/tabs';
 import { Badge } from '../components/ui/badge';
 import { Label } from '../components/ui/label';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
-import { MessageSquare, Plus, ThumbsUp, User, Calendar, Tag, Filter, Search, Share, Bookmark, Flag, MessageSquareOff } from 'lucide-react';
+import { MessageSquare, Plus, ThumbsUp, User, Calendar, Tag, Filter, Search, Share, Bookmark, Flag, MessageSquareOff, Sparkles, Lightbulb, Code, Rocket, Trophy } from 'lucide-react';
 
 // Types for community board
 interface CommunityPost {
@@ -86,20 +91,21 @@ const CommunityBoardPage: React.FC = () => {
   const [newComment, setNewComment] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
 
-  // Categories for community posts
+  // Categories for community posts - hackathon specific
   const categories = [
-    { value: 'question', label: 'Question' },
-    { value: 'prompt', label: 'Prompt Sharing' },
-    { value: 'tutorial', label: 'Tutorial' },
-    { value: 'showcase', label: 'Project Showcase' },
-    { value: 'discussion', label: 'Discussion' },
-    { value: 'announcement', label: 'Announcement' },
+    { value: 'question', label: 'Question', icon: <MessageSquare className="h-4 w-4" /> },
+    { value: 'idea', label: 'Project Idea', icon: <Lightbulb className="h-4 w-4" /> },
+    { value: 'showcase', label: 'Project Showcase', icon: <Rocket className="h-4 w-4" /> },
+    { value: 'resource', label: 'Resource', icon: <Code className="h-4 w-4" /> },
+    { value: 'team', label: 'Team Formation', icon: <User className="h-4 w-4" /> },
+    { value: 'announcement', label: 'Announcement', icon: <Sparkles className="h-4 w-4" /> },
   ];
 
-  // Popular tags
+  // Popular tags for hackathon
   const popularTags = [
-    'react', 'typescript', 'tailwind', 'vite', 'shadcn', 'ai', 'prompt', 'beginner',
-    'advanced', 'deployment', 'database', 'authentication', 'styling', 'performance'
+    'ai', 'web3', 'react', 'nextjs', 'typescript', 'design', 'mobile', 'beginner',
+    'frontend', 'backend', 'fullstack', 'database', 'ui/ux', 'blockchain', 'api',
+    'saas', 'productivity', 'education', 'health', 'fintech', 'gaming'
   ];
 
   // Fetch posts from the API
@@ -339,19 +345,24 @@ const CommunityBoardPage: React.FC = () => {
     return categories.find(cat => cat.value === value)?.label || value;
   };
 
+  // Get category icon from value
+  const getCategoryIcon = (value: string) => {
+    return categories.find(cat => cat.value === value)?.icon || <MessageSquare className="h-4 w-4" />;
+  };
+
   // Get category color based on category value
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'question':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
-      case 'prompt':
+      case 'idea':
         return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300';
-      case 'tutorial':
-        return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
       case 'showcase':
         return 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300';
-      case 'discussion':
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+      case 'resource':
+        return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
+      case 'team':
+        return 'bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300';
       case 'announcement':
         return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300';
       default:
@@ -363,23 +374,25 @@ const CommunityBoardPage: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Community Board</h1>
+          <h1 className="text-3xl font-bold text-foreground bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-600 dark:from-amber-200 dark:to-yellow-500">
+            Hackathon Community
+          </h1>
           <p className="text-muted-foreground mt-1">
-            Connect with other bolt.new users, share prompts, and get help
+            Connect with other participants, share ideas, and find team members
           </p>
         </div>
         
         {isAuthenticated ? (
           <Button 
             onClick={() => setShowNewPostDialog(true)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-medium"
           >
             <Plus className="h-4 w-4" />
             New Post
           </Button>
         ) : (
           <Link to="/login">
-            <Button variant="outline">
+            <Button variant="outline" className="border-amber-400 text-amber-400 hover:bg-amber-400/10">
               Sign in to post
             </Button>
           </Link>
@@ -387,7 +400,7 @@ const CommunityBoardPage: React.FC = () => {
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-card border border-border rounded-lg p-4 mb-6">
+      <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-4 mb-6">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -395,25 +408,26 @@ const CommunityBoardPage: React.FC = () => {
               placeholder="Search posts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9"
+              className="pl-9 bg-gray-800/50 border-gray-700 focus:border-amber-500"
             />
           </div>
           
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full md:w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px] bg-gray-800/50 border-gray-700">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-gray-800 border-gray-700">
               <SelectItem value="">All Categories</SelectItem>
               {categories.map(category => (
-                <SelectItem key={category.value} value={category.value}>
+                <SelectItem key={category.value} value={category.value} className="flex items-center gap-2">
+                  {category.icon}
                   {category.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
           
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button variant="outline" className="flex items-center gap-2 border-gray-700 bg-gray-800/50">
             <Filter className="h-4 w-4" />
             Filters
           </Button>
@@ -427,7 +441,7 @@ const CommunityBoardPage: React.FC = () => {
               <Badge
                 key={tag}
                 variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="cursor-pointer"
+                className={`cursor-pointer ${selectedTags.includes(tag) ? 'bg-amber-500 hover:bg-amber-600 text-black' : 'border-gray-700 hover:border-amber-500'}`}
                 onClick={() => {
                   if (selectedTags.includes(tag)) {
                     setSelectedTags(selectedTags.filter(t => t !== tag));
@@ -445,11 +459,11 @@ const CommunityBoardPage: React.FC = () => {
 
       {/* Tabs and Content */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-3 md:w-[400px]">
-          <TabsTrigger value="all">All Posts</TabsTrigger>
-          <TabsTrigger value="popular">Popular</TabsTrigger>
+        <TabsList className="grid grid-cols-3 md:w-[400px] bg-gray-800/70 p-1">
+          <TabsTrigger value="all" className="data-[state=active]:bg-amber-500 data-[state=active]:text-black">All Posts</TabsTrigger>
+          <TabsTrigger value="popular" className="data-[state=active]:bg-amber-500 data-[state=active]:text-black">Popular</TabsTrigger>
           {isAuthenticated && (
-            <TabsTrigger value="bookmarks">Bookmarks</TabsTrigger>
+            <TabsTrigger value="bookmarks" className="data-[state=active]:bg-amber-500 data-[state=active]:text-black">Bookmarks</TabsTrigger>
           )}
         </TabsList>
         
@@ -468,11 +482,11 @@ const CommunityBoardPage: React.FC = () => {
 
       {/* New Post Dialog */}
       <Dialog open={showNewPostDialog} onOpenChange={setShowNewPostDialog}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px] bg-gray-900 border-gray-800">
           <DialogHeader>
-            <DialogTitle>Create New Post</DialogTitle>
+            <DialogTitle className="text-xl text-amber-400">Create New Post</DialogTitle>
             <DialogDescription>
-              Share your question, prompt, or start a discussion with the community.
+              Share your question, idea, or start a discussion with the hackathon community.
             </DialogDescription>
           </DialogHeader>
           
@@ -486,6 +500,7 @@ const CommunityBoardPage: React.FC = () => {
                   value={newPost.title}
                   onChange={(e) => setNewPost({...newPost, title: e.target.value})}
                   required
+                  className="bg-gray-800 border-gray-700"
                 />
               </div>
               
@@ -495,12 +510,13 @@ const CommunityBoardPage: React.FC = () => {
                   value={newPost.category} 
                   onValueChange={(value) => setNewPost({...newPost, category: value})}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-gray-800 border-gray-700">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-800 border-gray-700">
                     {categories.map(category => (
-                      <SelectItem key={category.value} value={category.value}>
+                      <SelectItem key={category.value} value={category.value} className="flex items-center gap-2">
+                        {category.icon}
                         {category.label}
                       </SelectItem>
                     ))}
@@ -512,11 +528,12 @@ const CommunityBoardPage: React.FC = () => {
                 <Label htmlFor="content">Content</Label>
                 <Textarea
                   id="content"
-                  placeholder="Share your question, prompt, or start a discussion..."
+                  placeholder="Share your question, idea, or start a discussion..."
                   rows={8}
                   value={newPost.content}
                   onChange={(e) => setNewPost({...newPost, content: e.target.value})}
                   required
+                  className="bg-gray-800 border-gray-700"
                 />
                 <p className="text-xs text-muted-foreground">
                   Markdown formatting is supported.
@@ -537,8 +554,14 @@ const CommunityBoardPage: React.FC = () => {
                         handleAddTag();
                       }
                     }}
+                    className="bg-gray-800 border-gray-700"
                   />
-                  <Button type="button" onClick={handleAddTag} disabled={!newTag.trim()}>
+                  <Button 
+                    type="button" 
+                    onClick={handleAddTag} 
+                    disabled={!newTag.trim()}
+                    className="bg-amber-500 hover:bg-amber-600 text-black"
+                  >
                     Add
                   </Button>
                 </div>
@@ -546,12 +569,12 @@ const CommunityBoardPage: React.FC = () => {
                 {newPost.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {newPost.tags.map(tag => (
-                      <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+                      <Badge key={tag} variant="secondary" className="flex items-center gap-1 bg-amber-500/20 text-amber-300">
                         {tag}
                         <button
                           type="button"
                           onClick={() => handleRemoveTag(tag)}
-                          className="ml-1 rounded-full hover:bg-secondary/80"
+                          className="ml-1 rounded-full hover:bg-amber-500/30"
                         >
                           ×
                         </button>
@@ -563,13 +586,17 @@ const CommunityBoardPage: React.FC = () => {
             </div>
             
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setShowNewPostDialog(false)}>
+              <Button type="button" variant="outline" onClick={() => setShowNewPostDialog(false)} className="border-gray-700">
                 Cancel
               </Button>
-              <Button type="submit" disabled={submitting}>
+              <Button 
+                type="submit" 
+                disabled={submitting}
+                className="bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-medium"
+              >
                 {submitting ? (
                   <>
-                    <LoadingSpinner size="sm\" className="mr-2" />
+                    <LoadingSpinner size="sm" className="mr-2" />
                     Posting...
                   </>
                 ) : (
@@ -583,7 +610,7 @@ const CommunityBoardPage: React.FC = () => {
 
       {/* Post Details Dialog */}
       <Dialog open={!!currentPostId} onOpenChange={(open) => !open && setCurrentPostId(null)}>
-        <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800">
           {currentPostId && renderPostDetails()}
         </DialogContent>
       </Dialog>
@@ -595,7 +622,7 @@ const CommunityBoardPage: React.FC = () => {
     if (loading) {
       return (
         <div className="flex justify-center items-center py-12">
-          <LoadingSpinner size="lg" />
+          <LoadingSpinner size="lg" className="text-amber-500" />
         </div>
       );
     }
@@ -604,15 +631,15 @@ const CommunityBoardPage: React.FC = () => {
       return (
         <div className="text-center py-12">
           <p className="text-red-500 dark:text-red-400 mb-4">{error}</p>
-          <Button onClick={fetchPosts}>Try Again</Button>
+          <Button onClick={fetchPosts} className="bg-amber-500 hover:bg-amber-600 text-black">Try Again</Button>
         </div>
       );
     }
 
     if (posts.length === 0) {
       return (
-        <div className="text-center py-12 bg-card border border-border rounded-lg">
-          <MessageSquareOff className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+        <div className="text-center py-12 bg-gray-900/50 border border-gray-800 rounded-lg">
+          <MessageSquareOff className="h-12 w-12 mx-auto text-amber-500/50 mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No posts found</h3>
           <p className="text-muted-foreground mb-6">
             {type === 'bookmarks' 
@@ -622,7 +649,10 @@ const CommunityBoardPage: React.FC = () => {
                 : "Be the first to start a discussion!"}
           </p>
           {isAuthenticated && type !== 'bookmarks' && (
-            <Button onClick={() => setShowNewPostDialog(true)}>
+            <Button 
+              onClick={() => setShowNewPostDialog(true)}
+              className="bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-medium"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Create Post
             </Button>
@@ -634,22 +664,17 @@ const CommunityBoardPage: React.FC = () => {
     return (
       <div className="space-y-4">
         {posts.map(post => (
-          <Card key={post.id} className="hover:border-primary/50 transition-colors">
+          <Card key={post.id} className="hover:border-amber-500/50 transition-colors bg-gray-900/50 border-gray-800">
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle 
-                    className="text-xl hover:text-primary cursor-pointer"
-                    onClick={() => setCurrentPostId(post.id)}
-                  >
-                    {post.title}
-                  </CardTitle>
-                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                  <div className="flex items-center gap-2 mb-2">
                     <Badge className={getCategoryColor(post.category)}>
-                      {getCategoryLabel(post.category)}
+                      {getCategoryIcon(post.category)}
+                      <span className="ml-1">{getCategoryLabel(post.category)}</span>
                     </Badge>
                     {post.tags.slice(0, 3).map(tag => (
-                      <Badge key={tag} variant="outline">
+                      <Badge key={tag} variant="outline" className="border-gray-700 bg-gray-800/50">
                         {tag}
                       </Badge>
                     ))}
@@ -659,6 +684,12 @@ const CommunityBoardPage: React.FC = () => {
                       </span>
                     )}
                   </div>
+                  <CardTitle 
+                    className="text-xl hover:text-amber-400 cursor-pointer"
+                    onClick={() => setCurrentPostId(post.id)}
+                  >
+                    {post.title}
+                  </CardTitle>
                 </div>
                 <div className="flex items-center gap-2">
                   {isAuthenticated && (
@@ -666,7 +697,7 @@ const CommunityBoardPage: React.FC = () => {
                       variant="ghost"
                       size="icon"
                       onClick={() => handleBookmarkPost(post.id)}
-                      className={post.isBookmarked ? 'text-yellow-500' : ''}
+                      className={post.isBookmarked ? 'text-amber-400' : 'text-gray-500 hover:text-amber-400'}
                     >
                       <Bookmark className="h-4 w-4" />
                     </Button>
@@ -690,16 +721,16 @@ const CommunityBoardPage: React.FC = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="flex items-center gap-1 px-2"
+                  className={`flex items-center gap-1 px-2 ${post.isLiked ? 'text-amber-400' : 'hover:text-amber-400'}`}
                   onClick={() => handleLikePost(post.id)}
                 >
-                  <ThumbsUp className={`h-4 w-4 ${post.isLiked ? 'text-blue-500 fill-blue-500' : ''}`} />
+                  <ThumbsUp className={`h-4 w-4 ${post.isLiked ? 'fill-amber-400' : ''}`} />
                   <span>{post.likes}</span>
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="flex items-center gap-1 px-2"
+                  className="flex items-center gap-1 px-2 hover:text-amber-400"
                   onClick={() => setCurrentPostId(post.id)}
                 >
                   <MessageSquare className="h-4 w-4" />
@@ -730,7 +761,8 @@ const CommunityBoardPage: React.FC = () => {
         <DialogHeader>
           <div className="flex items-center gap-2 mb-1">
             <Badge className={getCategoryColor(post.category)}>
-              {getCategoryLabel(post.category)}
+              {getCategoryIcon(post.category)}
+              <span className="ml-1">{getCategoryLabel(post.category)}</span>
             </Badge>
             <div className="flex items-center text-sm text-muted-foreground">
               <User className="h-3 w-3 mr-1" />
@@ -741,10 +773,10 @@ const CommunityBoardPage: React.FC = () => {
               <span>{formatDate(post.createdAt)}</span>
             </div>
           </div>
-          <DialogTitle className="text-2xl">{post.title}</DialogTitle>
+          <DialogTitle className="text-2xl text-amber-400">{post.title}</DialogTitle>
           <div className="flex flex-wrap gap-2 mt-2">
             {post.tags.map(tag => (
-              <Badge key={tag} variant="outline">
+              <Badge key={tag} variant="outline" className="border-gray-700 bg-gray-800/50">
                 {tag}
               </Badge>
             ))}
@@ -755,30 +787,30 @@ const CommunityBoardPage: React.FC = () => {
           {post.content}
         </div>
         
-        <div className="flex items-center justify-between border-t border-border pt-4 mb-4">
+        <div className="flex items-center justify-between border-t border-gray-800 pt-4 mb-4">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center gap-1"
+              className={`flex items-center gap-1 ${post.isLiked ? 'text-amber-400' : 'hover:text-amber-400'}`}
               onClick={() => handleLikePost(post.id)}
             >
-              <ThumbsUp className={`h-4 w-4 ${post.isLiked ? 'text-blue-500 fill-blue-500' : ''}`} />
+              <ThumbsUp className={`h-4 w-4 ${post.isLiked ? 'fill-amber-400' : ''}`} />
               <span>{post.likes} Likes</span>
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center gap-1"
+              className={`flex items-center gap-1 ${post.isBookmarked ? 'text-amber-400' : 'hover:text-amber-400'}`}
               onClick={() => handleBookmarkPost(post.id)}
             >
-              <Bookmark className={`h-4 w-4 ${post.isBookmarked ? 'text-yellow-500 fill-yellow-500' : ''}`} />
+              <Bookmark className={`h-4 w-4 ${post.isBookmarked ? 'fill-amber-400' : ''}`} />
               <span>{post.isBookmarked ? 'Bookmarked' : 'Bookmark'}</span>
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 hover:text-amber-400"
               onClick={() => {
                 navigator.clipboard.writeText(`${window.location.origin}/community/${post.id}`);
                 alert('Link copied to clipboard!');
@@ -801,8 +833,11 @@ const CommunityBoardPage: React.FC = () => {
           )}
         </div>
         
-        <div className="border-t border-border pt-4">
-          <h3 className="font-medium text-lg mb-4">Comments ({post.comments})</h3>
+        <div className="border-t border-gray-800 pt-4">
+          <h3 className="font-medium text-lg mb-4 flex items-center gap-2">
+            <MessageSquare className="h-5 w-5 text-amber-400" />
+            Comments ({post.comments})
+          </h3>
           
           {isAuthenticated ? (
             <form onSubmit={handleAddComment} className="mb-6">
@@ -810,13 +845,17 @@ const CommunityBoardPage: React.FC = () => {
                 placeholder="Add a comment..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="mb-2"
+                className="mb-2 bg-gray-800 border-gray-700 focus:border-amber-500"
               />
               <div className="flex justify-end">
-                <Button type="submit" disabled={!newComment.trim() || submittingComment}>
+                <Button 
+                  type="submit" 
+                  disabled={!newComment.trim() || submittingComment}
+                  className="bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-medium"
+                >
                   {submittingComment ? (
                     <>
-                      <LoadingSpinner size="sm\" className="mr-2" />
+                      <LoadingSpinner size="sm" className="mr-2" />
                       Posting...
                     </>
                   ) : (
@@ -826,12 +865,12 @@ const CommunityBoardPage: React.FC = () => {
               </div>
             </form>
           ) : (
-            <div className="bg-muted/50 rounded-lg p-4 mb-6 text-center">
+            <div className="bg-gray-800/50 rounded-lg p-4 mb-6 text-center">
               <p className="text-muted-foreground mb-2">
                 You need to be signed in to comment
               </p>
               <Link to="/login">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="border-amber-500 text-amber-500 hover:bg-amber-500/10">
                   Sign In
                 </Button>
               </Link>
@@ -840,30 +879,30 @@ const CommunityBoardPage: React.FC = () => {
           
           {loadingComments ? (
             <div className="flex justify-center py-4">
-              <LoadingSpinner />
+              <LoadingSpinner className="text-amber-500" />
             </div>
           ) : comments.length === 0 ? (
             <div className="text-center py-6 text-muted-foreground">
-              <MessageSquareOff className="h-8 w-8 mx-auto mb-2" />
+              <MessageSquareOff className="h-8 w-8 mx-auto mb-2 text-amber-500/50" />
               <p>No comments yet. Be the first to comment!</p>
             </div>
           ) : (
             <div className="space-y-4">
               {comments.map(comment => (
-                <div key={comment.id} className="border border-border rounded-lg p-4">
+                <div key={comment.id} className="border border-gray-800 rounded-lg p-4 bg-gray-900/30">
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-2">
-                      <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-r from-amber-400 to-yellow-600 flex items-center justify-center text-black font-bold">
                         {comment.authorName.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <p className="font-medium">{comment.authorName}</p>
+                        <p className="font-medium text-amber-300">{comment.authorName}</p>
                         <p className="text-xs text-muted-foreground">
                           {formatDate(comment.createdAt)}
                         </p>
                       </div>
                     </div>
-                    <Button variant="ghost" size="icon" className="h-6 w-6">
+                    <Button variant="ghost" size="icon" className="h-6 w-6 text-amber-400">
                       <ThumbsUp className="h-3 w-3" />
                     </Button>
                   </div>
