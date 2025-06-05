@@ -569,7 +569,7 @@ const CommunityBoardPage: React.FC = () => {
               <Button type="submit" disabled={submitting}>
                 {submitting ? (
                   <>
-                    <LoadingSpinner size="sm" className="mr-2" />
+                    <LoadingSpinner size="sm\" className="mr-2" />
                     Posting...
                   </>
                 ) : (
@@ -816,7 +816,7 @@ const CommunityBoardPage: React.FC = () => {
                 <Button type="submit" disabled={!newComment.trim() || submittingComment}>
                   {submittingComment ? (
                     <>
-                      <LoadingSpinner size="sm" className="mr-2" />
+                      <LoadingSpinner size="sm\" className="mr-2" />
                       Posting...
                     </>
                   ) : (

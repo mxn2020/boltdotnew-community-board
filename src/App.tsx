@@ -60,7 +60,7 @@ const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
 
   if (user?.role !== 'admin') {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/dashboard\" replace />;
   }
 
   return <>{children}</>;
