@@ -596,7 +596,7 @@ const CommunityBoardPage: React.FC = () => {
               >
                 {submitting ? (
                   <>
-                    <LoadingSpinner size="sm" className="mr-2" />
+                    <LoadingSpinner size="sm\" className="mr-2" />
                     Posting...
                   </>
                 ) : (
@@ -855,7 +855,7 @@ const CommunityBoardPage: React.FC = () => {
                 >
                   {submittingComment ? (
                     <>
-                      <LoadingSpinner size="sm" className="mr-2" />
+                      <LoadingSpinner size="sm\" className="mr-2" />
                       Posting...
                     </>
                   ) : (
